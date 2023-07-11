@@ -36,11 +36,10 @@
         - name: Export deployment matrix
           id: export-deployment-matrix
           run: |
-            JOSN="$(cat ./deployment-config.json)"
-            JSON="${JSON//'%'/'%25'}"
-            JSON="${JSON//'\n'/'%OA'}"
-            JSON="${JSON//'\r'/'%OD'}"
-            echo "::set-output name=deployment-matrix::$(echo $JSON)"
+            JSON="$(cat ./deployment-config.json)"
+            SON="${JSON//'%'/'%25'}"
+            SON="${JSON//'\n'/'%0A'}"
+            JSON="${JSON//'\r'/'%0D'}"
 
     prepare-release-on-servers:
       name: "${{ matrix.server.name }}: Prepare release"
