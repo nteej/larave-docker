@@ -45,9 +45,7 @@
       needs: create-deployment-artifacts
       strategy:
         matrix:
-          server: ${{
-            fromJson(needs.create-deployment-artifacts.outputs.DEPLOYMENT_MATRIX)
-            }}
+          server: "${{ fromJson(needs.create-deployment-artifacts.outputs.DEPLOYMENT_MATRIX) }}"
       steps:
         - uses: actions/download-artifact@v3
           with:
