@@ -39,15 +39,26 @@
             echo "DEPLOYMENT_MATRIX<<${delimiter}" >> "${GITHUB_OUTPUT}"
             echo "$JSON" >> "${GITHUB_OUTPUT}"
             echo "${delimiter}" >> "${GITHUB_OUTPUT}"
+
     prepare-release-on-servers:
       name: "${{ matrix.server.name }}: Prepare release"
       runs-on: ubuntu-latest
       needs: create-deployment-artifacts
       strategy:
         matrix:
-          server: "${{ fromJson(needs.create-deployment-artifacts.outputs.DEPLOYMENT_MATRIX) }}"
+          server: ${{
+            fromJson(needs.create-deployment-artifacts.outputs.DEPLOYMENT_MATRIX) }}
       steps:
-        - uses: actions/download-artifact@v3
+        - uses: actions/download-artifact@v2
           with:
             name: app-build
+        - name: Upload
+          uses: appleboy/scp-action@master
+          with:
+            host: ${{ matrix.server.ip }}
+            username: ${{ matrix.server.username }}
+            password: ${{ matrix.server.password }}
+            port: ${{ matrix.server.port }}
+            source: ${{ github.sha }}.tar.gz
+            target: ${{ matrix.server.path }}/artifacts // /var/www/html/artifacts
   
