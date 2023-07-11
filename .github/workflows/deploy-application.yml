@@ -10,7 +10,7 @@
       outputs:
         deployment_matrix: ${{ steps.export-deployment-matrix.outputs.deployment_matrix }}
       steps:
-        - uses: actions/checkout@v3
+        - uses: actions/checkout@v2
         - name: Compile CSS and Javascript
           run: |
             npm install 
