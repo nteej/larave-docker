@@ -37,9 +37,9 @@
           id: export-deployment-matrix
           run: |
             JOSN="$(cat ./deployment-config.json)"
-            JSON="${JSON//$'%'/'%25'}"
-            JSON="${JSON//$'\n'/'%0A'}"
-            JSON="${JSON//$'\r'/'%0D'}"
+            JSON="${JSON//'%'/'%25'}"
+            JSON="${JSON//'\n'/'%OA'}"
+            JSON="${JSON//'\r'/'%OD'}"
             echo "::set-output name=deployment-matrix::$(echo $JSON)"
 
     prepare-release-on-servers:
