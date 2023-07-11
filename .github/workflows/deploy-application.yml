@@ -26,7 +26,7 @@
           env:
             GITHUB_SHA: ${{ github.sha }}
           run: tar -czf "${GITHUV_SHA}".tar.gz --exclude=*.git --exclude=node_modules *
-          
+
         - name: Store artifacts for distribution
           uses: actions/upload-artifact@v2
           with:
@@ -37,9 +37,9 @@
           id: export-deployment-matrix
           run: |
             JOSN="$(cat ./deployment-config.json)"
-            JSON="${JSON//'%'/'%25'}"
-            JSON="${JSON//'\n'/'%0A'}"
-            JSON="${JSON//'\r'/'%0D'}"
+            JSON="${JSON//$'%'/'%25'}"
+            JSON="${JSON//$'\n'/'%0A'}"
+            JSON="${JSON//$'\r'/'%0D'}"
             echo "::set-output name=deployment-matrix::$(echo $JSON)"
 
     prepare-release-on-servers:
