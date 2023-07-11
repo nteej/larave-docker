@@ -8,7 +8,7 @@
       name: Create Deployment Artifacts
       runs-on: ubuntu-latest
       outputs:
-        DEPLOYMENT_MATRIX: ${{ steps.export-deployment-matrix.outputs.DEPLOYMENT_MATRIX }}
+        deployment_matrix: ${{ steps.export-deployment-matrix.outputs.deployment_matrix }}
       steps:
         - uses: actions/checkout@v3
         - name: Compile CSS and Javascript
@@ -34,11 +34,11 @@
         - name: Export deployment matrix
           id: export-deployment-matrix
           run: |
-            delimiter="$(openssl rand -hex 8)"
             JOSN="$(cat ./deployment-config.json)"
-            echo "DEPLOYMENT_MATRIX<<${delimiter}" >> "${GITHUB_OUTPUT}"
-            echo "$JSON" >> "${GITHUB_OUTPUT}"
-            echo "${delimiter}" >> "${GITHUB_OUTPUT}"
+            JSON="${JSON//'%'/'%25'}"
+            JSON="${JSON//'\n'/'%0A'}"
+            JSON="${JSON//'\r'/'%0D'}"
+            echo "::set-output name=deployment-matrix::$(echo $JSON)"
 
     prepare-release-on-servers:
       name: "${{ matrix.server.name }}: Prepare release"
@@ -47,7 +47,7 @@
       strategy:
         matrix:
           server: ${{
-            fromJson(needs.create-deployment-artifacts.outputs.DEPLOYMENT_MATRIX) }}
+            fromJson(needs.create-deployment-artifacts.outputs.deployment_matrix) }}
       steps:
         - uses: actions/download-artifact@v2
           with:
