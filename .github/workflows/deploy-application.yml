@@ -36,10 +36,11 @@
         - name: Export deployment matrix
           id: export-deployment-matrix
           run: |
-            JSON="$(cat ./deployment-config.json)"
-            SON="${JSON//'%'/'%25'}"
-            SON="${JSON//'\n'/'%0A'}"
-            JSON="${JSON//'\r'/'%0D'}"
+            delimiter="$(openssl rand -hex 8)"
+            JSON="$(cat ./.github/workflows/servers.json)"
+            echo "deployment_matrix<<${delimiter}" >> "${GITHUB_OUTPUT}"
+            echo "$JSON" >> "${GITHUB_OUTPUT}"
+            echo "${delimiter}" >> "${GITHUB_OUTPUT}"
 
     prepare-release-on-servers:
       name: "${{ matrix.server.name }}: Prepare release"
