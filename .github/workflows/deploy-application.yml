@@ -25,7 +25,7 @@
         - name: Create Deployment Artifact
           env:
             GITHUB_SHA: ${{ github.sha }}
-          run: tar -czf "${GITHUV_SHA}".tar.gz *
+          run: tar -czf /tmp/"${GITHUV_SHA}".tar.gz *
 
         - name: Store artifacts for distribution
           uses: actions/upload-artifact@v2
