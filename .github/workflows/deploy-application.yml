@@ -23,15 +23,13 @@
         - name: Install Composer Dependencies
           run: composer install --no-dev --no-interaction --prefer-dist
         - name: Create Deployment Artifact
-          env:
-            GITHUB_SHA: ${{ github.sha }}
-          run: tar -czf /tmp/"${GITHUV_SHA}".tar.gz *
+          run: tar -czf app.tar.gz *
 
         - name: Store artifacts for distribution
           uses: actions/upload-artifact@v2
           with:
             name: app-build
-            path: /tmp/${{ github.sha }}.tar.gz
+            path: app.tar.gz
 
         - name: Export deployment matrix
           id: export-deployment-matrix
