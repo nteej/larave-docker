@@ -4,7 +4,7 @@
 	"username": "root",
 	"password": "Dev23API",
 	"port": "22",
-	"beforeHooks": "",
+	"beforeHooks": "echo $GITHUB_SHA",
 	"afterHooks": "",
 	"path": "/var/www/html/"
 }]
