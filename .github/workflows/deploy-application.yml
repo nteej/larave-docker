@@ -49,7 +49,7 @@
           server: ${{
             fromJSON(needs.create-deployment-artifacts.outputs.deployment_matrix) }}
       steps:
-        - uses: actions/download-artifact@v3
+        - uses: actions/download-artifact@v2
           with:
             name: app-build
         - name: Upload
@@ -60,5 +60,5 @@
             password: ${{ matrix.server.password }}
             port: ${{ matrix.server.port }}
             source: ${{ github.sha }}.tar.gz
-            target: ${{ matrix.server.path }}/artifacts
+            target: ${{ matrix.server.path }}/artifacts // /var/www/html/artifacts
   
