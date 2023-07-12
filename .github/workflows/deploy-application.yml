@@ -158,5 +158,5 @@
             port: ${{ matrix.server.port }}
             envs: RELEASE_PATH,ACTIVE_RELEASE_PATH,STORAGE_PATH,BASE_PATH,GITHUB_SHA
             script: |
-              ${{ matrix.server.beforeHooks }}          
+              ${{ matrix.server.afterHooks }}          
   
