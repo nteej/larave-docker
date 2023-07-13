@@ -1,8 +1,8 @@
 [{
 	"name": "server-DOP",
 	"ip": "137.184.233.228",
-	"username": "root",
-	"password": "Dev23API",
+	"username": "deployer",
+	"password": "Deployer@23",
 	"port": "22",
 	"beforeHooks": "echo $GITHUB_SHA",
 	"afterHooks": "",
